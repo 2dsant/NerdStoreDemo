@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\NerdStoreDemo.Core\NerdStoreDemo.Core.csproj" />
+  </ItemGroup>
+
 </Project>
