@@ -48,16 +48,6 @@ public class Validacoes
         }
     }
 
-    public static void ValidarExpressao(string pattern, string valor, string mensagem)
-    {
-        var regex = new Regex(pattern);
-
-        if (!regex.IsMatch(pattern))
-        {
-            throw new DomainException(mensagem);
-        }
-    }
-
     public static void ValidarSeVazio(string valor, string mensagem)
     {
         if (valor == null || valor.Trim().Length == 0)
