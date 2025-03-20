@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NerdStore.Catalogo.Application.ViewModels;
+namespace NerdStoreDemo.Catalogo.Application.ViewModels;
 
 public class ProdutoViewModel
 {

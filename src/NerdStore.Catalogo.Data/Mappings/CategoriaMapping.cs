@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NerdStoreDemo.Catalogo.Domain;
 
-namespace NerdStore.Catalogo.Data.Mappings;
+namespace NerdStoreDemo.Catalogo.Data.Mappings;
 
 public class CategoriaMapping : IEntityTypeConfiguration<Categoria>
 {

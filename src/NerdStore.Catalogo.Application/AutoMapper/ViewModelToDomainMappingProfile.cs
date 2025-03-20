@@ -1,8 +1,8 @@
-﻿using NerdStore.Catalogo.Application.ViewModels;
-using NerdStoreDemo.Catalogo.Domain;
+﻿using NerdStoreDemo.Catalogo.Domain;
 using AutoMapper;
+using NerdStoreDemo.Catalogo.Application.ViewModels;
 
-namespace NerdStore.Catalogo.Application.AutoMapper;
+namespace NerdStoreDemo.Catalogo.Application.AutoMapper;
 
 public class ViewModelToDomainMappingProfile : Profile
 {

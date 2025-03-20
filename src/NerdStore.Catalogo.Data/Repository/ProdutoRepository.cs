@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NerdStoreDemo.Catalogo.Data;
 using NerdStoreDemo.Catalogo.Domain;
 using NerdStoreDemo.Core.Data;
 
-namespace NerdStore.Catalogo.Data.Repository;
+namespace NerdStoreDemo.Catalogo.Data.Repository;
 
-class ProdutoRepository : IProdutoRepository
+public class ProdutoRepository : IProdutoRepository
 {
     private readonly CatalogoContext _context;
     public IUnitOfWork UnitOfWork => _context;

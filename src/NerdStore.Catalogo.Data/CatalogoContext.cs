@@ -2,7 +2,7 @@
 using NerdStoreDemo.Catalogo.Domain;
 using NerdStoreDemo.Core.Data;
 
-namespace NerdStore.Catalogo.Data;
+namespace NerdStoreDemo.Catalogo.Data;
 
 public class CatalogoContext : DbContext, IUnitOfWork
 {
