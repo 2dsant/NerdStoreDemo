@@ -6,9 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="FluentValidation" Version="11.11.0" />
-		<PackageReference Include="MediatR" Version="8.1.0" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NerdStoreDemo.Core\NerdStoreDemo.Core.csproj" />
+  </ItemGroup>
 
 </Project>
