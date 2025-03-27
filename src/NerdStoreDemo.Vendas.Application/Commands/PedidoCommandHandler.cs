@@ -1,16 +1,20 @@
-﻿using NerdStoreDemo.Core.Messages;
+﻿using NerdStoreDemo.Core.Communication.Mediator;
+using NerdStoreDemo.Core.Messages;
 using NerdStoreDemo.Vendas.Domain;
 using MediatR;
+using NerdStoreDemo.Core.Messages.CommonMessages.Notifications;
 
 namespace NerdStoreDemo.Vendas.Application.Commands;
 
 public class PedidoCommandHandler : IRequestHandler<AdicionarItemPedidoCommand, bool>
 {
     private readonly IPedidoRepository _pedidoRepository;
+    private readonly IMediatorHandler _mediatorHandler;
 
-    public PedidoCommandHandler(IPedidoRepository pedidoRepository)
+    public PedidoCommandHandler(IPedidoRepository pedidoRepository, IMediatorHandler mediatorHandler)
     {
         _pedidoRepository = pedidoRepository;
+        _mediatorHandler = mediatorHandler;
     }
 
     public async Task<bool> Handle(AdicionarItemPedidoCommand message, CancellationToken cancellationToken)
@@ -51,7 +55,7 @@ public class PedidoCommandHandler : IRequestHandler<AdicionarItemPedidoCommand, 
 
         foreach (var error in message.ValidationResult.Errors)
         {
-            //lançar um evento de erro
+            _mediatorHandler.PublicarNotificacao(new DomainNotification(message.MessageType, error.ErrorMessage));
         }
 
         return false;
