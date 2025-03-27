@@ -1,6 +1,6 @@
 ﻿using NerdStoreDemo.Core.Messages;
 
-namespace NerdStoreDemo.Core.Bus;
+namespace NerdStoreDemo.Core.Communication.Mediator;
 
 public interface IMediatorHandler
 {

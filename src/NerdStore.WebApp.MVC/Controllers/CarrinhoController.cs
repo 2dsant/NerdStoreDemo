@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NerdStoreDemo.Catalogo.Application.Services;
 using NerdStoreDemo.Vendas.Application.Commands;
-using NerdStoreDemo.Core.Bus;
+using NerdStoreDemo.Core.Communication.Mediator;
 
 namespace NerdStoreDemo.WebApp.MVC.Controllers
 {

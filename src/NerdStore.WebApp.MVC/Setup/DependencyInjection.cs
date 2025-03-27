@@ -3,11 +3,12 @@ using NerdStoreDemo.Catalogo.Application.Services;
 using NerdStoreDemo.Catalogo.Data;
 using NerdStoreDemo.Catalogo.Domain.Events;
 using NerdStoreDemo.Catalogo.Domain;
-using NerdStoreDemo.Core.Bus;
 using NerdStoreDemo.Catalogo.Data.Repository;
 using NerdStoreDemo.Vendas.Application.Commands;
 using NerdStoreDemo.Vendas.Domain;
 using NerdStoreDemo.Vendas.Data.Repository;
+using NerdStoreDemo.Core.Communication.Mediator;
+using NerdStoreDemo.Core.Messages.CommonMessages.Notifications;
 
 namespace NerdStoreDemo.WebApp.MVC.Setup;
 
@@ -15,8 +16,11 @@ public static class DependencyInjection
 {
     public static void RegisterServices(this IServiceCollection services)
     {
-        // Domain Bus (Mediator)
+        // Mediator
         services.AddScoped<IMediatorHandler, MediatrHandler>();
+
+        // Notifications
+        services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
 
         // Catalogo
         services.AddScoped<IProdutoRepository, ProdutoRepository>();
