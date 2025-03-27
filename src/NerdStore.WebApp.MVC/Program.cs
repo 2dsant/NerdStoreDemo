@@ -7,6 +7,7 @@ using System.Reflection;
 using MediatR;
 using NerdStoreDemo.Catalogo.Data;
 using System.Configuration;
+using NerdStoreDemo.Vendas.Data;
 
 namespace NerdStoreDemo.WebApp.MVC
 {
@@ -30,6 +31,9 @@ namespace NerdStoreDemo.WebApp.MVC
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddDbContext<CatalogoContext>(options =>
+                options.UseSqlServer(connectionString));
+
+            builder.Services.AddDbContext<VendasContext>(options =>
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddDefaultIdentity<IdentityUser>()

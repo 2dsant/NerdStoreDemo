@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +25,7 @@
     <ProjectReference Include="..\NerdStore.Catalogo.Data\NerdStoreDemo.Catalogo.Data.csproj" />
     <ProjectReference Include="..\NerdStoreDemo.Core\NerdStoreDemo.Core.csproj" />
     <ProjectReference Include="..\NerdStoreDemo.Vendas.Application\NerdStoreDemo.Vendas.Application.csproj" />
+    <ProjectReference Include="..\NerdStoreDemo.Vendas.Data\NerdStoreDemo.Vendas.Data.csproj" />
   </ItemGroup>
 
 </Project>
