@@ -1,10 +1,30 @@
-﻿namespace NerdStoreDemo.Core.DomainObjects;
+﻿using NerdStoreDemo.Core.Messages;
+
+namespace NerdStoreDemo.Core.DomainObjects;
 
 // No DDD, uma entidade é um objeto com identidade própria,
 // ou seja, mesmo que seus atributos mudem, ela ainda é a mesma entidade.
 public abstract class Entity
 {
     public Guid Id { get; set; }
+
+    private List<Event> _notificacoes;
+
+    public void AdicionarEvento(Event evento)
+    {
+        _notificacoes = _notificacoes ?? new List<Event>();
+        _notificacoes.Add(evento);
+    }
+
+    public void RemoverEvento(Event evento)
+    {
+        _notificacoes?.Remove(evento);
+    }
+
+    public void LimparEventos(Event evento)
+    {
+        _notificacoes?.Clear();
+    }
 
     protected Entity() 
     {
