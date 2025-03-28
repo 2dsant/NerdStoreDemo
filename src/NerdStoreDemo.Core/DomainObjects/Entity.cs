@@ -9,6 +9,7 @@ public abstract class Entity
     public Guid Id { get; set; }
 
     private List<Event> _notificacoes;
+    public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
 
     public void AdicionarEvento(Event evento)
     {
@@ -21,7 +22,7 @@ public abstract class Entity
         _notificacoes?.Remove(evento);
     }
 
-    public void LimparEventos(Event evento)
+    public void LimparEventos()
     {
         _notificacoes?.Clear();
     }
