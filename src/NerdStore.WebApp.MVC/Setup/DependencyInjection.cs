@@ -9,6 +9,7 @@ using NerdStoreDemo.Vendas.Domain;
 using NerdStoreDemo.Vendas.Data.Repository;
 using NerdStoreDemo.Core.Communication.Mediator;
 using NerdStoreDemo.Core.Messages.CommonMessages.Notifications;
+using NerdStoreDemo.Vendas.Application.Queries;
 
 namespace NerdStoreDemo.WebApp.MVC.Setup;
 
@@ -32,6 +33,7 @@ public static class DependencyInjection
 
         // Vendas
         services.AddScoped<IPedidoRepository, PedidoRepository>();
+        services.AddScoped<IPedidoQueries, PedidoQueries>();
         services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
 
     }

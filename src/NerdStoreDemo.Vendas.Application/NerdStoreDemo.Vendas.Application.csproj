@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NerdStoreDemo.Core\NerdStoreDemo.Core.csproj" />
     <ProjectReference Include="..\NerdStoreDemo.Vendas.Domain\NerdStoreDemo.Vendas.Domain.csproj" />
   </ItemGroup>

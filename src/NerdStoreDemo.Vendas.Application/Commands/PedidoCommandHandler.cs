@@ -50,7 +50,7 @@ public class PedidoCommandHandler : IRequestHandler<AdicionarItemPedidoCommand, 
             pedido.AdicionarEvento(new PedidoAtualizadoEvent(pedido.ClienteId, pedido.Id, pedido.ValorTotal));
         }
 
-        pedido.AdicionarEvento(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id,message.ProdutoId, message.ValorUnitario, message.Quantidade));
+        pedido.AdicionarEvento(new PedidoItemAdicionadoEvent(pedido.ClienteId, pedido.Id,message.ProdutoId, message.Nome, message.ValorUnitario, message.Quantidade));
         return await _pedidoRepository.UnitOfWork.Commit();
     }
 
