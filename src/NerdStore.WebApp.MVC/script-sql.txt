@@ -11,3 +11,12 @@ INSERT INTO Produtos (Id, CategoriaId, Nome, Descricao, Ativo, Valor, DataCadast
 INSERT INTO Produtos (Id, CategoriaId, Nome, Descricao, Ativo, Valor, DataCadastro, Imagem, QuantidadeEstoque, Altura, Largura, Profundidade) VALUES (NEWID(), 'd0232e97-4a33-41de-9bd7-cbb07d74f4b0', 'Camiseta Code Life Cinza', 'Camiseta 100% algodão, resistente a lavagens e altas temperaturas.', 1, 80.00, GETDATE(), 'camiseta3.jpg', 15, 5, 5, 5)
 INSERT INTO Produtos (Id, CategoriaId, Nome, Descricao, Ativo, Valor, DataCadastro, Imagem, QuantidadeEstoque, Altura, Largura, Profundidade) VALUES (NEWID(), '537950b0-3743-47de-a09b-ade1edbb577f', 'Caneca Star Bugs Coffee', 'Caneca de porcelana com impressão térmica.', 1, 20.00, GETDATE(), 'caneca1.jpg', 5, 12, 8, 5)
 INSERT INTO Produtos (Id, CategoriaId, Nome, Descricao, Ativo, Valor, DataCadastro, Imagem, QuantidadeEstoque, Altura, Largura, Profundidade) VALUES (NEWID(), '537950b0-3743-47de-a09b-ade1edbb577f', 'Caneca Programmer Code', 'Caneca de porcelana com impressão térmica.', 1, 15.00, GETDATE(), 'caneca2.jpg', 8, 12, 8, 5)
+
+
+-- SCRIPT DE VOUCHER
+
+insert into Vouchers (Id, Codigo, Percentual, ValorDesconto, Quantidade, TipoDescontoVoucher, DataCriacao, DataUtilizacao, DataValidade, Ativo, Utilizado)
+values (NEWID(), 'PROMO-15-REAIS', NULL, 15, 0, 1, GETDATE(), null, GETDATE() + 1, 1, 0)
+
+insert into Vouchers (Id, Codigo, Percentual, ValorDesconto, Quantidade, TipoDescontoVoucher, DataCriacao, DataUtilizacao, DataValidade, Ativo, Utilizado)
+values (NEWID(), 'PROMO-10-OFF', 10, null, 50, 0, GETDATE(), null, GETDATE() + 90, 1, 0)

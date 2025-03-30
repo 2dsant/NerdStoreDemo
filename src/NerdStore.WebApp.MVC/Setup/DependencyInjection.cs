@@ -10,6 +10,7 @@ using NerdStoreDemo.Vendas.Data.Repository;
 using NerdStoreDemo.Core.Communication.Mediator;
 using NerdStoreDemo.Core.Messages.CommonMessages.Notifications;
 using NerdStoreDemo.Vendas.Application.Queries;
+using NerdStoreDemo.Vendas.Application.Events;
 
 namespace NerdStoreDemo.WebApp.MVC.Setup;
 
@@ -36,5 +37,13 @@ public static class DependencyInjection
         services.AddScoped<IPedidoQueries, PedidoQueries>();
         services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
 
+        services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
+        services.AddScoped<IRequestHandler<AtualizarItemPedidoCommand, bool>, PedidoCommandHandler>();
+        services.AddScoped<IRequestHandler<RemoverItemPedidoCommand, bool>, PedidoCommandHandler>();
+        services.AddScoped<IRequestHandler<AplicarVoucherPedidoCommand, bool>, PedidoCommandHandler>();
+
+        services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
+        services.AddScoped<INotificationHandler<PedidoAtualizadoEvent>, PedidoEventHandler>();
+        services.AddScoped<INotificationHandler<PedidoItemAdicionadoEvent>, PedidoEventHandler>();
     }
 }
