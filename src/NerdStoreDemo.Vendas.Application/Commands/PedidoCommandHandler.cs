@@ -1,4 +1,5 @@
-﻿using NerdStoreDemo.Core.Messages.CommonMessages.Notifications;
+﻿using NerdStoreDemo.Core.Messages.CommonMessages.IntegrationEvents;
+using NerdStoreDemo.Core.Messages.CommonMessages.Notifications;
 using NerdStoreDemo.Core.Communication.Mediator;
 using NerdStoreDemo.Vendas.Application.Events;
 using NerdStoreDemo.Core.DomainObjects.DTO;
@@ -6,7 +7,6 @@ using NerdStoreDemo.Core.Extensions;
 using NerdStoreDemo.Core.Messages;
 using NerdStoreDemo.Vendas.Domain;
 using MediatR;
-using NerdStoreDemo.Core.Messages.CommonMessages.IntegrationEvents;
 
 namespace NerdStoreDemo.Vendas.Application.Commands;
 
@@ -15,7 +15,9 @@ public class PedidoCommandHandler :
     IRequestHandler<AtualizarItemPedidoCommand, bool>,
     IRequestHandler<RemoverItemPedidoCommand, bool>,
     IRequestHandler<AplicarVoucherPedidoCommand, bool>,
-    IRequestHandler<IniciarPedidoCommand, bool>
+    IRequestHandler<IniciarPedidoCommand, bool>,
+    IRequestHandler<FinalizarPedidoCommand, bool>,
+    IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>
 {
     private readonly IPedidoRepository _pedidoRepository;
     private readonly IMediatorHandler _mediatorHandler;
@@ -175,6 +177,37 @@ public class PedidoCommandHandler :
         pedido.AdicionarEvento(new PedidoIniciadoEvent(pedido.Id, pedido.ClienteId, listaProdutosPedido, pedido.ValorTotal, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
 
         _pedidoRepository.Atualizar(pedido);
+        return await _pedidoRepository.UnitOfWork.Commit();
+    }
+
+    public async Task<bool> Handle(FinalizarPedidoCommand message, CancellationToken cancellationToken)
+    {
+        var pedido = await _pedidoRepository.ObterPorId(message.PedidoId);
+
+        if (pedido == null)
+        {
+            await _mediatorHandler.PublicarNotificacao(new DomainNotification("pedido", "Pedido não encontrado!"));
+            return false;
+        }
+
+        pedido.FinalizarPedido();
+
+        pedido.AdicionarEvento(new PedidoFinalizadoEvent(message.PedidoId));
+        return await _pedidoRepository.UnitOfWork.Commit();
+    }
+
+    public async Task<bool> Handle(CancelarProcessamentoPedidoEstornarEstoqueCommand message, CancellationToken cancellationToken)
+    {
+        var pedido = await _pedidoRepository.ObterPorId(message.PedidoId);
+
+        if (pedido == null)
+        {
+            await _mediatorHandler.PublicarNotificacao(new DomainNotification("pedido", "Pedido não encontrado!"));
+            return false;
+        }
+
+        pedido.TornarRascunho();
+
         return await _pedidoRepository.UnitOfWork.Commit();
     }
 
