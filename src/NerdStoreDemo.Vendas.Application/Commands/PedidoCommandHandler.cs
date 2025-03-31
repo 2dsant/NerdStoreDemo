@@ -1,9 +1,12 @@
 ﻿using NerdStoreDemo.Core.Messages.CommonMessages.Notifications;
 using NerdStoreDemo.Core.Communication.Mediator;
 using NerdStoreDemo.Vendas.Application.Events;
+using NerdStoreDemo.Core.DomainObjects.DTO;
+using NerdStoreDemo.Core.Extensions;
 using NerdStoreDemo.Core.Messages;
 using NerdStoreDemo.Vendas.Domain;
 using MediatR;
+using NerdStoreDemo.Core.Messages.CommonMessages.IntegrationEvents;
 
 namespace NerdStoreDemo.Vendas.Application.Commands;
 
@@ -11,7 +14,8 @@ public class PedidoCommandHandler :
     IRequestHandler<AdicionarItemPedidoCommand, bool>,
     IRequestHandler<AtualizarItemPedidoCommand, bool>,
     IRequestHandler<RemoverItemPedidoCommand, bool>,
-    IRequestHandler<AplicarVoucherPedidoCommand, bool>
+    IRequestHandler<AplicarVoucherPedidoCommand, bool>,
+    IRequestHandler<IniciarPedidoCommand, bool>
 {
     private readonly IPedidoRepository _pedidoRepository;
     private readonly IMediatorHandler _mediatorHandler;
@@ -154,6 +158,23 @@ public class PedidoCommandHandler :
         _pedidoRepository.RemoverItem(pedidoItem);
         _pedidoRepository.Atualizar(pedido);
 
+        return await _pedidoRepository.UnitOfWork.Commit();
+    }
+
+    public async Task<bool> Handle(IniciarPedidoCommand message, CancellationToken cancellationToken)
+    {
+        if (!ValidarComando(message)) return false;
+
+        var pedido = await _pedidoRepository.ObterPedidoRascunhoPorClienteId(message.ClienteId);
+        pedido.IniciarPedido();
+
+        var itensList = new List<Item>();
+        pedido.PedidoItems.ForEach(i => itensList.Add(new Item { Id = i.ProdutoId, Quantidade = i.Quantidade }));
+        var listaProdutosPedido = new ListaProdutosPedido { PedidoId = pedido.Id, Itens = itensList };
+
+        pedido.AdicionarEvento(new PedidoIniciadoEvent(pedido.Id, pedido.ClienteId, listaProdutosPedido, pedido.ValorTotal, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
+
+        _pedidoRepository.Atualizar(pedido);
         return await _pedidoRepository.UnitOfWork.Commit();
     }
 

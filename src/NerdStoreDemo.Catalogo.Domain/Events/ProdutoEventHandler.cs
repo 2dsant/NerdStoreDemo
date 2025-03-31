@@ -1,14 +1,22 @@
-﻿using MediatR;
+﻿using NerdStoreDemo.Core.Messages.CommonMessages.IntegrationEvents;
+using NerdStoreDemo.Core.Communication.Mediator;
+using MediatR;
 
 namespace NerdStoreDemo.Catalogo.Domain.Events;
 
-public class ProdutoEventHandler : INotificationHandler<ProdutoAbaixoEstoqueEvent>
+public class ProdutoEventHandler : 
+    INotificationHandler<ProdutoAbaixoEstoqueEvent>,
+    INotificationHandler<PedidoIniciadoEvent>
 {
     private readonly IProdutoRepository _produtoRepository;
+    private readonly IEstoqueService _estoqueService;
+    private IMediatorHandler _mediatorHandler;
 
-    public ProdutoEventHandler(IProdutoRepository produtoRepository)
+    public ProdutoEventHandler(IProdutoRepository produtoRepository, IEstoqueService estoqueService, IMediatorHandler mediatorHandler)
     {
-        this._produtoRepository = produtoRepository;
+        _produtoRepository = produtoRepository;
+        _estoqueService = estoqueService;
+        _mediatorHandler = mediatorHandler;
     }
 
     public async Task Handle(ProdutoAbaixoEstoqueEvent mensagem, CancellationToken cancellationToken)
@@ -19,5 +27,19 @@ public class ProdutoEventHandler : INotificationHandler<ProdutoAbaixoEstoqueEven
         // Ou alguma outra lógica conforme a necessidade.
         
         Console.WriteLine("Evento foi tratado com sucesso!");
+    }
+
+    public async Task Handle(PedidoIniciadoEvent message, CancellationToken cancellationToken)
+    {
+        var result = await _estoqueService.DebitarListaProdutosPedido(message.ProdutosPedido);
+
+        if (result)
+        {
+            await _mediatorHandler.PublicarEvento(new PedidoEstoqueConfirmadoEvent(message.PedidoId, message.ClienteId, message.Total, message.ProdutosPedido, message.NomeCartao, message.NumeroCartao, message.ExpiracaoCartao, message.CvvCartao));
+        }
+        else
+        {
+            await _mediatorHandler.PublicarEvento(new PedidoEstoqueRejeitadoEvent(message.PedidoId, message.ClienteId));
+        }
     }
 }
