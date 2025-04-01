@@ -37,10 +37,10 @@ public class PedidoEventHandler :
         return Task.CompletedTask;
     }
 
-    public Task Handle(PedidoEstoqueRejeitadoEvent message, CancellationToken cancellationToken)
+    public async Task Handle(PedidoEstoqueRejeitadoEvent message, CancellationToken cancellationToken)
     {
-        //await _mediatorHandler.EnviarComando(new CancelarProcessamentoPedidoCommand(message.PedidoId, message.ClienteId));
-        return Task.CompletedTask;
+        await _mediatorHandler.EnviarComando(new CancelarProcessamentoPedidoCommand(message.PedidoId, message.ClienteId));
+        //return Task.CompletedTask;
     }
 
     public async Task Handle(PagamentoRealizadoEvent message, CancellationToken cancellationToken)

@@ -11,6 +11,10 @@ using NerdStoreDemo.Core.Communication.Mediator;
 using NerdStoreDemo.Core.Messages.CommonMessages.Notifications;
 using NerdStoreDemo.Vendas.Application.Queries;
 using NerdStoreDemo.Vendas.Application.Events;
+using NerdStoreDemo.Core.Messages.CommonMessages.IntegrationEvents;
+using NerdStoreDemo.Vendas.Data;
+using NerdStoreDemo.Pagamentos.Business;
+using NerdStoreDemo.Pagamentos.AntiCorruption;
 
 namespace NerdStoreDemo.WebApp.MVC.Setup;
 
@@ -35,15 +39,28 @@ public static class DependencyInjection
         // Vendas
         services.AddScoped<IPedidoRepository, PedidoRepository>();
         services.AddScoped<IPedidoQueries, PedidoQueries>();
-        services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
+        services.AddScoped<VendasContext>();
 
         services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, bool>, PedidoCommandHandler>();
         services.AddScoped<IRequestHandler<AtualizarItemPedidoCommand, bool>, PedidoCommandHandler>();
         services.AddScoped<IRequestHandler<RemoverItemPedidoCommand, bool>, PedidoCommandHandler>();
         services.AddScoped<IRequestHandler<AplicarVoucherPedidoCommand, bool>, PedidoCommandHandler>();
+        services.AddScoped<IRequestHandler<IniciarPedidoCommand, bool>, PedidoCommandHandler>();
+        services.AddScoped<IRequestHandler<FinalizarPedidoCommand, bool>, PedidoCommandHandler>();
+        services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoCommand, bool>, PedidoCommandHandler>();
+        services.AddScoped<IRequestHandler<CancelarProcessamentoPedidoEstornarEstoqueCommand, bool>, PedidoCommandHandler>();
 
         services.AddScoped<INotificationHandler<PedidoRascunhoIniciadoEvent>, PedidoEventHandler>();
-        services.AddScoped<INotificationHandler<PedidoAtualizadoEvent>, PedidoEventHandler>();
-        services.AddScoped<INotificationHandler<PedidoItemAdicionadoEvent>, PedidoEventHandler>();
+        services.AddScoped<INotificationHandler<PedidoEstoqueRejeitadoEvent>, PedidoEventHandler>();
+        services.AddScoped<INotificationHandler<PagamentoRealizadoEvent>, PedidoEventHandler>();
+        services.AddScoped<INotificationHandler<PagamentoRecusadoEvent>, PedidoEventHandler>();
+
+        // Pagamento
+        services.AddScoped<IPagamentoRepository, PagamentoRepository>();
+        services.AddScoped<IPagamentoService, PagamentoService>();
+        services.AddScoped<IPagamentoCartaoCreditoFacade, PagamentoCartaoCreditoFacade>();
+        services.AddScoped<IPayPalGateway, PayPalGateway>();
+        services.AddScoped<Pagamentos.AntiCorruption.IConfigurationManager, NerdStoreDemo.Pagamentos.AntiCorruption.ConfigurationManager>();
+        //services.AddScoped<PagamentoContext>();
     }
 }

@@ -1,7 +1,6 @@
-﻿namespace NerdStoreDemo.Pagamentos.Business
+﻿namespace NerdStoreDemo.Pagamentos.Business;
+
+public interface IPagamentoCartaoCreditoFacade
 {
-    public interface IPagamentoCartaoCreditoFacade
-    {
-        Transacao RealizarPagamento(Pedido pedido, Pagamento pagamento);
-    }
+    Transacao RealizarPagamento(Pedido pedido, Pagamento pagamento);
 }
