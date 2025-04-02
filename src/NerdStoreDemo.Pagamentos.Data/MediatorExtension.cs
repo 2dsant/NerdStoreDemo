@@ -1,11 +1,16 @@
 ﻿using NerdStoreDemo.Core.Communication.Mediator;
 using NerdStoreDemo.Core.DomainObjects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace NerdStoreDemo.Vendas.Data;
+namespace NerdStoreDemo.Pagamentos.Data;
 
 public static class MediatorExtension
 {
-    public static async Task PublicarEventos(this IMediatorHandler mediator, VendasContext ctx)
+    public static async Task PublicarEventos(this IMediatorHandler mediator, PagamentoContext ctx)
     {
         var domainEntities = ctx.ChangeTracker
             .Entries<Entity>()

@@ -15,6 +15,7 @@ using NerdStoreDemo.Core.Messages.CommonMessages.IntegrationEvents;
 using NerdStoreDemo.Vendas.Data;
 using NerdStoreDemo.Pagamentos.Business;
 using NerdStoreDemo.Pagamentos.AntiCorruption;
+using NerdStoreDemo.Pagamentos.Data.Repository;
 
 namespace NerdStoreDemo.WebApp.MVC.Setup;
 

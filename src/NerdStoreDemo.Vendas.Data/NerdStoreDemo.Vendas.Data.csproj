@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NerdStoreDemo.Pagamentos.Business\NerdStoreDemo.Pagamentos.Business.csproj" />
     <ProjectReference Include="..\NerdStoreDemo.Vendas.Domain\NerdStoreDemo.Vendas.Domain.csproj" />
   </ItemGroup>
 
