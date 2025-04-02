@@ -16,6 +16,7 @@ using NerdStoreDemo.Vendas.Data;
 using NerdStoreDemo.Pagamentos.Business;
 using NerdStoreDemo.Pagamentos.AntiCorruption;
 using NerdStoreDemo.Pagamentos.Data.Repository;
+using EventSourcing;
 
 namespace NerdStoreDemo.WebApp.MVC.Setup;
 
@@ -28,6 +29,9 @@ public static class DependencyInjection
 
         // Notifications
         services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
+
+        // Event Sourcing
+        services.AddSingleton<IEventStoreService, EventStoreService>();
 
         // Catalogo
         services.AddScoped<IProdutoRepository, ProdutoRepository>();
