@@ -17,6 +17,7 @@ using NerdStoreDemo.Pagamentos.Business;
 using NerdStoreDemo.Pagamentos.AntiCorruption;
 using NerdStoreDemo.Pagamentos.Data.Repository;
 using EventSourcing;
+using NerdStoreDemo.Core.Data.EventSourcing;
 
 namespace NerdStoreDemo.WebApp.MVC.Setup;
 
@@ -32,6 +33,7 @@ public static class DependencyInjection
 
         // Event Sourcing
         services.AddSingleton<IEventStoreService, EventStoreService>();
+        services.AddSingleton<IEventSourcingRepository, EventSourcingRepository>();
 
         // Catalogo
         services.AddScoped<IProdutoRepository, ProdutoRepository>();
