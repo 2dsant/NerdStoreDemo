@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NerdStoreDemo.Catalogo.Domain;
-using NerdStoreDemo.Core.Data;
 using NerdStoreDemo.Core.Messages;
+using NerdStoreDemo.Core.Data;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace NerdStoreDemo.Catalogo.Data;
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NerdStoreDemo.Catalogo.Data;
 using NerdStoreDemo.Catalogo.Domain;
 using NerdStoreDemo.Core.Data;
 
